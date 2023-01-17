@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "629781995187",
+    "project_id": "coincheckproject",
+    "storage_bucket": "coincheckproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:629781995187:android:cef88109a1bdde4028dac6",
+        "android_client_info": {
+          "package_name": "com.daisaku.another31469.coinchecktrade"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "629781995187-deovlbqv49dno1g3s4apjcv6p9d61na7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.daisaku.another31469.coinchecktrade",
+            "certificate_hash": "fa037cf428f2c47e216506d012d6c4b9c8405f6d"
+          }
+        },
+        {
+          "client_id": "629781995187-afa74jrf77iaicq0tq2uas8vghmjrvt9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrj20y5urgnKCAUhe3m45eDPkdYqEBE1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "629781995187-afa74jrf77iaicq0tq2uas8vghmjrvt9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
