@@ -4,8 +4,6 @@ import com.google.api.client.http.*;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import org.apache.commons.codec.binary.Hex;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -24,18 +22,34 @@ public class CoinCheckApi {
         this.apiSecret = apiSecret;
     }
 
-    public String getTicker() throws JSONException {
+    public String getTicker() {
         String url = "https://coincheck.com/api/accounts/ticker";
-        String jsonString = requestByUrlWithHeader(url, createHeader(url));
-        JSONObject object = new JSONObject(jsonString);
-        return object.getString("last");
+        return requestByUrlWithHeader(url, createHeader(url));
     }
 
-    public String orderBuyOrSell() throws JSONException {
+    public String getTrades() {
+        String url = "https://coincheck.com/api/trades";
+        return requestByUrlWithHeader(url, createHeader(url));
+    }
+
+    public void orderBuy(String rate, String amount) {
         String url = "https://coincheck.com/api/exchange/orders";
-        String jsonString = responseByUrlWithHeader(url, createHeader(url));
-        JSONObject object = new JSONObject(jsonString);
-        return object.getString("order_type");
+        Map<String, String> params = new HashMap<>();
+        params.put("pair", "btc_jpy");
+        params.put("order_type", "buy");
+        params.put("rate", rate);
+        params.put("amount", amount);
+        responseByUrlWithHeader(url, params);
+    }
+
+    public void orderSell(String rate, String amount) {
+        String url = "https://coincheck.com/api/exchange/orders";
+        Map<String, String> params = new HashMap<>();
+        params.put("pair", "btc_jpy");
+        params.put("order_type", "sell");
+        params.put("rate", rate);
+        params.put("amount", amount);
+        responseByUrlWithHeader(url, params);
     }
 
     private Map<String, String> createHeader(String url) {
@@ -81,7 +95,7 @@ public class CoinCheckApi {
         return jsonString;
     }
 
-    private String responseByUrlWithHeader(String url, final Map<String, String> headers) {
+    private void responseByUrlWithHeader(String url, final Map<String, String> headers) {
         ApacheHttpTransport transport = new ApacheHttpTransport();
         HttpRequestFactory factory = transport.createRequestFactory(response -> {
             response.setConnectTimeout(0);
@@ -93,16 +107,13 @@ public class CoinCheckApi {
             }
             response.setHeaders(httpHeaders);
         });
-        String jsonString;
         try {
             HttpRequest request = factory.buildPostRequest(new GenericUrl(url), new UrlEncodedContent(headers));
             HttpResponse response = request.execute();
-            jsonString = response.parseAsString();
+            response.disconnect();
         } catch (IOException e) {
             e.printStackTrace();
-            jsonString = null;
         }
-        return jsonString;
     }
 
 
@@ -112,7 +123,7 @@ public class CoinCheckApi {
                 secretKey.getBytes(),
                 "hmacSHA256");
 
-        Mac mac = null;
+        Mac mac;
         try {
             mac = Mac.getInstance("hmacSHA256");
             mac.init(keySpec);
