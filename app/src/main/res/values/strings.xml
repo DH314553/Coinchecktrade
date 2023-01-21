@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Coinchecktrade</string>
+    <string name="accept">認証情報登録</string>
 </resources>
