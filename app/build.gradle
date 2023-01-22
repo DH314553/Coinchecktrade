@@ -26,6 +26,8 @@ android {
                 install "pandas"
                 install "matplotlib"
                 install "tensorflow"
+                install "keras"
+                install "scikit-learn"
             }
         }
     }
